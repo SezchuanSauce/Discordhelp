@@ -1,0 +1,108 @@
+using System;
+using System.IO;
+using System.Linq;
+
+namespace vaja7
+{
+   internal class Program
+   {
+       struct Beseda
+       {
+           public string beseda;
+           public int pojavitev;
+       }
+       static void PocistiBesedilo(string besedilo, ref string pociscenoBesedilo)
+       {
+
+           for (int i = 0; i < besedilo.Length; i++)
+           {
+               if (besedilo[i] >= 'A' && besedilo[i] <= 'Z')
+               {
+                   pociscenoBesedilo += (char)(besedilo[i] + 32);
+               }
+               else
+               {
+                   pociscenoBesedilo += besedilo[i];
+               }
+           }
+       }
+       static void Main(string[] args)
+       {
+           string pociscenoBesedilo = "";
+
+           string besedilo = "How much wood could a wood chuck chuck, if a wood chuck could chuck wood? THE ANSWER IS 24!";
+           PocistiBesedilo(besedilo, ref pociscenoBesedilo);
+           Console.WriteLine("novo besedilo: " + pociscenoBesedilo);
+
+           Beseda[] seznam = new Beseda[100];
+
+           seznam[0].beseda = "how";
+           seznam[0].pojavitev = 1;
+
+           seznam[1].beseda = "much";
+           seznam[1].pojavitev = 1;
+
+           seznam[2].beseda = "wood";
+           seznam[2].pojavitev = 3;
+
+           seznam[3].beseda = "could";
+           seznam[3].pojavitev = 2;
+
+           seznam[4].beseda = "a";
+           seznam[4].pojavitev = 1;
+
+           seznam[5].beseda = "wood";
+           seznam[5].pojavitev = 4;
+
+           seznam[6].beseda = "chuck";
+           seznam[6].pojavitev = 4;
+
+           seznam[7].beseda = "if";
+           seznam[7].pojavitev = 1;
+
+           seznam[8].beseda = "the";
+           seznam[8].pojavitev = 1;
+
+           seznam[9].beseda = "answer";
+           seznam[9].pojavitev = 1;
+
+           seznam[10].beseda = "is";
+           seznam[10].pojavitev = 1;
+
+           for (int i = 0; i < seznam.Length; i++)
+           {
+               if (seznam[i].pojavitev > 0)
+               {
+                   Console.WriteLine(seznam[i].beseda + ": " + seznam[i].pojavitev);
+               }
+           }
+
+           string vhodnaDatoteka = "vhod.txt";
+           using (StreamReader sr = File.OpenText(vhodnaDatoteka))
+           {
+               string s;
+               while ((s = sr.ReadLine()) != null)
+               {
+                   Console.WriteLine(s);
+               }
+           }
+
+           string izhodnaDatoteka = "izhod.txt";
+           using (StreamWriter sw = File.CreateText(izhodnaDatoteka))
+           {
+               for (int i = 0; i < seznam.Length; i++)
+
+               {
+                   if (seznam[i].pojavitev > 0)
+                   {
+                       Console.WriteLine(seznam[i].beseda + ": " + seznam[i].pojavitev);
+                       sw.WriteLine(seznam[i].beseda + ": " + seznam[i].pojavitev);
+                   }
+               }
+           }
+
+           Console.ReadKey();
+
+       }
+   }
+}
